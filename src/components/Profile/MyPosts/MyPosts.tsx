@@ -5,7 +5,7 @@ import {
     AddPostActionType,
     PostsType,
     UpdateTestActionType
-} from "../../../redux/state";
+} from "../../../redux/store";
 import {addPostActionCreator, UpdateNewPostTextActionCreator} from "../../../redux/profileReducer";
 
 type ProfilePageType = {

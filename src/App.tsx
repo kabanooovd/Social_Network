@@ -14,7 +14,7 @@ import {
     RootStateType,
     SendMessageType, StoreType,
     UpdateTestActionType
-} from './redux/state'
+} from './redux/store'
 
 type AppStateType = {
     state: RootStateType

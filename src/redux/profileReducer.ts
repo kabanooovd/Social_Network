@@ -5,20 +5,27 @@ import {
     RootStateType,
     SendMessageType,
     UpdateTestActionType
-} from "./state";
+} from "./store";
 
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
+let initialState = {
+    newPostText: '',
+    posts: [
+        {id: 1, message: 'Hey mate', likesCount: 5},
+        {id: 2, message: 'Did you understand what is it props?', likesCount: 100}
+    ]
+}
 
 type ProfileReducerLocalStateType = {
     posts: PostsType[]
     newPostText: string
 }
 
-export const profileReducer = (state: ProfileReducerLocalStateType,
-    action: AddPostActionType | UpdateTestActionType | NewMessageBodyType | SendMessageType) => {
+export const profileReducer = (state: ProfileReducerLocalStateType = initialState,
+                               action: AddPostActionType | UpdateTestActionType | NewMessageBodyType | SendMessageType) => {
 
     if (action.type === ADD_POST) {
         let newPost = {id: 5, message: action.postMessage, likesCount: 0};

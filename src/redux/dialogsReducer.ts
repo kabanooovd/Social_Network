@@ -5,10 +5,25 @@ import {
     RootStateType,
     SendMessageType,
     UpdateTestActionType
-} from "./state";
+} from "./store";
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE'
+
+let initialState = {
+    dialogs: [
+        {id: 1, name: 'Dimas'},
+        {id: 2, name: 'Stepan'},
+        {id: 3, name: 'Chuvak'},
+        {id: 4, name: 'Snejana'}
+    ],
+    messages: [
+        {id: 1, message: 'Hey Bro!!!'},
+        {id: 2, message: 'How is your lessons?'},
+        {id: 3, message: 'Work harder, its the only way to become a specialist'}
+    ],
+    newMessageBody: ''
+}
 
 type DialogsReducerLocalStateType = {
     dialogs: DialogsType[]
@@ -16,8 +31,8 @@ type DialogsReducerLocalStateType = {
     messages: MessageType[]
 }
 
-export const dialogsReducer = (state: DialogsReducerLocalStateType,
-    action: AddPostActionType | UpdateTestActionType | NewMessageBodyType | SendMessageType) => {
+export const dialogsReducer = (state: DialogsReducerLocalStateType = initialState,
+                               action: AddPostActionType | UpdateTestActionType | NewMessageBodyType | SendMessageType) => {
 
     if (action.type === UPDATE_NEW_MESSAGE_BODY) {
         state.newMessageBody = action.body
