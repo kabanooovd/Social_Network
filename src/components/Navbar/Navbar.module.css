@@ -1,0 +1,18 @@
+.nav {
+    grid-area: n;
+    background-color: cadetblue;
+    padding-left: 10px;
+    border-right: 10px solid white;
+}
+
+.item a{
+    color: gray;
+    text-decoration: none;
+}
+.item a:hover {
+    color: white;
+}
+
+.item .activeTTT {
+    color: yellowgreen;
+}

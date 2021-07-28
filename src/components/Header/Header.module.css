@@ -1,0 +1,20 @@
+
+
+.header {
+    grid-area: h;
+    background-color: green;
+    border-bottom: 10px solid white;
+    border-top: 10px solid white;
+}
+
+.header img {
+    width: 50px;
+}
+
+.header span {
+    float: right;
+    margin-right: 420px;
+    font-size: 30px;
+    color: white;
+    margin-top: 5px;
+}
