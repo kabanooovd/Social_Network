@@ -1,52 +1,35 @@
 import React from 'react';
 import s from './Dialogs.module.css'
-import DialogItem, {dialogItemType} from "./DialogItem/DialogItem";
+import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {StoreType} from '../../redux/store'
-import {sendMessageCreator, UpdateNewMessageBodyCreator} from "../../redux/dialogsReducer";
+import {DialogPageType} from '../../redux/store'
 
 type DialogsPropsType = {
-    store: StoreType
-
-    // messages: Array<MessageType>
-    // dialogs: Array<DialogsType>
-    // newMessageBody: string
-    // dispatch: (action: AddPostActionType | UpdateTestActionType | NewMessageBodyType | SendMessageType) => void
+    UpdateNewMessageBody: (body: string) => void
+    sendMessage: () => void
+    dialogPage: DialogPageType
 }
-
-
 
 const Dialogs = (props: DialogsPropsType) => {
 
-    const state = props.store.getState().dialogPage
+    const state = props.dialogPage
 
     const dialogsElements = state.dialogs.map(el => <DialogItem name={el.name} id={el.id}/>)
 
-    // const dialogsElements = props.dialogs // из массива объектов, получаем массив элементов JSX, кот явл-ся вызовом компоненты.
-    //     .map( arrElement => <DialogItem name={arrElement.name} id={arrElement.id}/> );
-
     const messagesElements = state.messages.map(el => <Message message={el.message}/>)
+
     const newMessageBody = state.newMessageBody
 
-    // const messagesElements = props.messages.map( arrElement => <Message message={arrElement.message}/>)
-    // const newMessageBody = props.newMessageBody;
+    const onSendMessageClick = () => props.sendMessage()
 
-    const onSendMessageClick = () => props.store.dispatch(sendMessageCreator())
-
-
-    // const onSendMessageClick = () => {
-    //     props.dispatch(sendMessageCreator())
-    // }
     const onNewMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.currentTarget.value
-        props.store.dispatch(UpdateNewMessageBodyCreator(body))
+        props.UpdateNewMessageBody(body)
     }
 
-    // const onNewMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //     let body = e.currentTarget.value
-    //     props.dispatch(UpdateNewMessageBodyCreator(body))
-    // }
-
+    const enterPressed = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter') onSendMessageClick()
+    }
 
     return (
         <div className={s.dialogs}>
@@ -55,10 +38,16 @@ const Dialogs = (props: DialogsPropsType) => {
             </div>
             <div className={s.messages}>
                 <div>{messagesElements}</div>
-                <div><textarea placeholder={'Enter Text...'}
-                               onChange={onNewMessageChange}
-                               value={newMessageBody}></textarea></div>
-                <div><button onClick={onSendMessageClick}>Send</button></div>
+                <div>
+                    <textarea placeholder={'Enter Text...'}
+                              onChange={onNewMessageChange}
+                              value={newMessageBody}
+                              onKeyPress={enterPressed}
+                    />
+                </div>
+                <div>
+                    <button onClick={onSendMessageClick}>Send</button>
+                </div>
             </div>
         </div>
     )

@@ -15,13 +15,12 @@ import {
     SendMessageType, StoreType,
     UpdateTestActionType
 } from './redux/store'
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 type AppStateType = {
     state: RootStateType
     dispatch: (action: AddPostActionType | UpdateTestActionType | NewMessageBodyType | SendMessageType) => void
     store: StoreType
-    //addPost: (postMessage: string) => void
-    //updateNewPostText: (text: string) => void
 }
 
 const App = (props: AppStateType) => {
@@ -32,17 +31,11 @@ const App = (props: AppStateType) => {
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Route path='/profile' render={() =>
-                    <Profile posts={props.state.profilePage.posts}
-                             dispatch={props.dispatch}
-                             newPostText={props.state.profilePage.newPostText}
-                             //updateNewPostText={props.updateNewPostText}
+                    <Profile store={props.store}
+
                     />}/>
                 <Route path='/dialogs' render={() =>
-                    <Dialogs store={props.store}
-                            /*dialogs={props.state.dialogPage.dialogs}
-                             messages={props.state.dialogPage.messages}
-                             newMessageBody={props.state.dialogPage.newMessageBody}
-                             dispatch={props.dispatch}*/
+                    <DialogsContainer store={props.store}
 
                     />}/>
                 <Route path='/news' component={News} />
