@@ -25,7 +25,7 @@ type AppStateType = {
 
 const App = (props: AppStateType) => {
     return (
-        <BrowserRouter>
+        /*<BrowserRouter>*/
         <div className='app-wrapper'>
             <Header/>
             <Navbar/>
@@ -35,15 +35,14 @@ const App = (props: AppStateType) => {
 
                     />}/>
                 <Route path='/dialogs' render={() =>
-                    <DialogsContainer store={props.store}
-
+                    <DialogsContainer
                     />}/>
                 <Route path='/news' component={News} />
                 <Route path='/music' component={Music} />
                 <Route path='/settings' component={Settings} />
             </div>
         </div>
-        </BrowserRouter>
+        /*</BrowserRouter>*/
     );
 }
 
