@@ -27,25 +27,14 @@ type ProfileReducerLocalStateType = {
 export const profileReducer = (state: ProfileReducerLocalStateType = initialState,
                                action: AddPostActionType | UpdateTestActionType | NewMessageBodyType | SendMessageType) => {
 
-    // if (action.type === ADD_POST) {
-    //     let newPost = {id: 5, message: action.postMessage, likesCount: 0};
-    //     state.posts.unshift(newPost)
-    // } else if (action.type === UPDATE_NEW_POST_TEXT) {
-    //     state.newPostText = action.text
-    // }
-    // return state
+    //et stateCopy;
     switch (action.type) {
         case ADD_POST: {
-            let newPost = {id: 5, message: action.postMessage, likesCount: 0};
-            let stateCopy = {...state}
-            stateCopy.posts = [...stateCopy.posts]
-            stateCopy.posts.unshift(newPost);
-            return stateCopy
+            let newPost = {id: 5, message: state.newPostText, likesCount: 0};
+            return {...state, posts: [newPost, ...state.posts], newPostText: ''}
         }
         case UPDATE_NEW_POST_TEXT: {
-            let stateCopy = {...state}
-            stateCopy.newPostText = action.text
-            return stateCopy
+            return {...state, newPostText: action.text}
         }
         default:
             return state

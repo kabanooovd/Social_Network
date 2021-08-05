@@ -21,7 +21,6 @@ const MyPosts = (props: ProfilePageType) => {
         if (newPostElement.current !== null) {
             let text = newPostElement.current.value
             props.addPost(text)
-            props.updateNewPostText('')
         }
     }
 
