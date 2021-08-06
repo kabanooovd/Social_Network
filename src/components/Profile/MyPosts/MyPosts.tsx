@@ -1,14 +1,7 @@
-import React, {ChangeEvent, LegacyRef, RefObject} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {PostsType} from "../../../redux/store";
-
-type ProfilePageType = {
-    newPostText: string
-    posts: Array<PostsType>
-    addPost: (text: string) => void
-    updateNewPostText: (text: string) => void
-}
+import {ProfilePageType} from "./MyPostsContainer";
 
 const MyPosts = (props: ProfilePageType) => {
 

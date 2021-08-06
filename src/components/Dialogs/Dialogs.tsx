@@ -2,15 +2,11 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {DialogPageType} from '../../redux/store'
 
-type DialogsPropsType = {
-    UpdateNewMessageBody: (body: string) => void
-    sendMessage: () => void
-    dialogPage: DialogPageType
-}
+import {DialogPagePropsType} from "./DialogsContainer";
 
-const Dialogs = (props: DialogsPropsType) => {
+
+const Dialogs = (props: DialogPagePropsType) => {
 
     const state = props.dialogPage
 

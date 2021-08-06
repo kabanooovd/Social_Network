@@ -1,17 +1,9 @@
-import {
-    AddPostActionType,
-    NewMessageBodyType,
-    PostsType,
-    RootStateType,
-    SendMessageType,
-    UpdateTestActionType
-} from "./store";
-import {followActionType, unFollowActionType, UsersToSetActionType} from "./usersReducer";
 import {ActionTypes} from "./ActionTipizationType";
-
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+
+
 
 let initialState = {
     newPostText: '',
@@ -19,6 +11,12 @@ let initialState = {
         {id: 1, message: 'Hey mate', likesCount: 5},
         {id: 2, message: 'Did you understand what is it props?', likesCount: 100}
     ]
+}
+
+export type PostsType = {
+    id: number
+    message: string
+    likesCount: number
 }
 
 type ProfileReducerLocalStateType = {
@@ -42,9 +40,9 @@ export const profileReducer = (state: ProfileReducerLocalStateType = initialStat
     }
 }
 
-export const addPostActionCreator = (text: string): AddPostActionType =>
+export const addPostActionCreator = (text: string) =>
     ({type: ADD_POST, postMessage: text})
-export const UpdateNewPostTextActionCreator = (text: string): UpdateTestActionType =>
+export const UpdateNewPostTextActionCreator = (text: string) =>
     ({type: UPDATE_NEW_POST_TEXT, text: text})
 
 

@@ -1,21 +1,38 @@
 import React from "react";
+import {Dispatch} from "redux";
 import {Users} from "./Users";
 import {connect} from "react-redux";
-import {followAC, setUsersAC, unFollowAC,} from "../../redux/usersReducer";
+import {followAC, LocationType, setUsersAC, unFollowAC, UsersReducerLocalStateType,} from "../../redux/usersReducer";
 import {AppStateType} from "../../redux/redux-store";
-import {ActionTypes} from "../../redux/ActionTipizationType";
 
+type UsersType = {
+    id: number
+    photoURL: string
+    followed: boolean
+    fullName: string
+    status: string
+    location: LocationType
+}
 
+type MapStateToPropsType = {
+    usersPage: UsersReducerLocalStateType
+}
 
+type MapDispatchToPropsType = {
+    follow: (userID: number) => void
+    unfollow: (userID: number) => void
+    setUsers: (users: UsersType[]) => void
+}
 
+export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-const mapStateToProps = (state: AppStateType) => {
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        users: state.usersPage.users
+        usersPage: state.usersPage
     }
 }
 
-const mapDispatchToProps = (dispatch: (action: ActionTypes) => void) => {
+const mapDispatchToProps = (dispatch: Dispatch ): MapDispatchToPropsType => {
     return {
         follow: (userID: number) => {
             dispatch(followAC(userID))
@@ -23,7 +40,7 @@ const mapDispatchToProps = (dispatch: (action: ActionTypes) => void) => {
         unfollow: (userID: number) => {
             dispatch(unFollowAC(userID))
         },
-        setUsers: (users: any) => {
+        setUsers: (users: UsersType[]) => {
             dispatch(setUsersAC(users))
         }
     }

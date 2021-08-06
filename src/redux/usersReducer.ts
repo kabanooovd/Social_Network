@@ -38,31 +38,31 @@ export type UsersReducerLocalStateType = {
 }
 
 
-let initialState = {
+let initialState: UsersReducerLocalStateType = {
     users: [
-        {id: 1,
-            photoURL: 'https://im0-tub-ru.yandex.net/i?id=72a5389fde239442c135b79511a43758-l&ref=rim&n=13&w=1080&h=1080' ,
-            followed: true, fullName: 'Dimas', status: 'student', location: {city: 'FishBurg', country: 'RF'}},
-        {id: 2,
-            photoURL: 'https://im0-tub-ru.yandex.net/i?id=72a5389fde239442c135b79511a43758-l&ref=rim&n=13&w=1080&h=1080' ,
-            followed: false, fullName: 'Sashsa', status: 'worker', location: {city: 'Moscow', country: 'RF'}},
-        {id: 3,
-            photoURL: 'https://im0-tub-ru.yandex.net/i?id=72a5389fde239442c135b79511a43758-l&ref=rim&n=13&w=1080&h=1080' ,
-            followed: true, fullName: 'Masha', status: 'waitress', location: {city: 'Kiev', country: 'Ukraine'}},
-        {id: 4,
-            photoURL: 'https://im0-tub-ru.yandex.net/i?id=72a5389fde239442c135b79511a43758-l&ref=rim&n=13&w=1080&h=1080' ,
-            followed: false, fullName: 'Pashsa', status: 'rocker', location: {city: 'Minsk', country: 'RB'}},
+        // {id: 1,
+        //     photoURL: 'https://im0-tub-ru.yandex.net/i?id=72a5389fde239442c135b79511a43758-l&ref=rim&n=13&w=1080&h=1080' ,
+        //     followed: true, fullName: 'Dimas', status: 'student', location: {city: 'FishBurg', country: 'RF'}},
+        // {id: 2,
+        //     photoURL: 'https://im0-tub-ru.yandex.net/i?id=72a5389fde239442c135b79511a43758-l&ref=rim&n=13&w=1080&h=1080' ,
+        //     followed: false, fullName: 'Sashsa', status: 'worker', location: {city: 'Moscow', country: 'RF'}},
+        // {id: 3,
+        //     photoURL: 'https://im0-tub-ru.yandex.net/i?id=72a5389fde239442c135b79511a43758-l&ref=rim&n=13&w=1080&h=1080' ,
+        //     followed: true, fullName: 'Masha', status: 'waitress', location: {city: 'Kiev', country: 'Ukraine'}},
+        // {id: 4,
+        //     photoURL: 'https://im0-tub-ru.yandex.net/i?id=72a5389fde239442c135b79511a43758-l&ref=rim&n=13&w=1080&h=1080' ,
+        //     followed: false, fullName: 'Pashsa', status: 'rocker', location: {city: 'Minsk', country: 'RB'}},
     ]
 }
 
-export const usersReducer = (state: UsersReducerLocalStateType = initialState, action: ActionTypes) => {
+export const usersReducer = (state: UsersReducerLocalStateType = initialState, action: ActionTypes): UsersReducerLocalStateType => {
 
     switch (action.type) {
         case FOLLOW: {
-            return {...state, users: state.users.map(el => el.id === action.userID? {...el, followed: true} : el)}
+            return {...state, users: state.users.map(el => el.id === action.userID? {...el, followed: false} : el)}
         }
         case UNFOLLOW: {
-            return {...state, users: state.users.map(el => el.id === action.userID? {...el, followed: false} : el)}
+            return {...state, users: state.users.map(el => el.id === action.userID? {...el, followed: true} : el)}
         }
         case SET_USERS: {
             return {...state, users: [...state.users, ...action.users]}

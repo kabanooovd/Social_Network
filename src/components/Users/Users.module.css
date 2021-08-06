@@ -1,4 +1,13 @@
+.photoURL {
+    width: 60px;
+    height: 60px;
 
+}
+
+.photoURLStyle {
+    border: 1px solid black;
+    border-radius: 30px;
+}
 
 
 

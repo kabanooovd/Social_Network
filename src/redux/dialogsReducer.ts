@@ -1,12 +1,8 @@
 import {
-    AddPostActionType, DialogsType,
-    MessageType,
     NewMessageBodyType,
-    RootStateType,
     SendMessageType,
-    UpdateTestActionType
 } from "./store";
-import {followActionType, unFollowActionType, UsersToSetActionType} from "./usersReducer";
+
 import {ActionTypes} from "./ActionTipizationType";
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
@@ -27,13 +23,23 @@ let initialState = {
     newMessageBody: ''
 }
 
-type DialogsReducerLocalStateType = {
+type DialogsType = {
+    id: number
+    name: string
+}
+
+export type MessageType = {
+    id: number
+    message: string
+}
+
+export type DialogsReducerLocalStateType = {
     dialogs: DialogsType[]
     newMessageBody: string
     messages: MessageType[]
 }
 
-export const dialogsReducer = (state: DialogsReducerLocalStateType = initialState, action:  ActionTypes) => {
+export const dialogsReducer = (state: DialogsReducerLocalStateType = initialState, action: ActionTypes) => {
 
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY: {
