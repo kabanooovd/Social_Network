@@ -1,6 +1,8 @@
 import {profileReducer} from "./profileReducer";
 import {dialogsReducer} from "./dialogsReducer";
 import {sideBarReducer} from "./sideBarReducer";
+import {followActionType, unFollowActionType, UsersToSetActionType, UsersType} from "./usersReducer";
+import {ActionTypes} from "./ActionTipizationType";
 
 export type MessageType = {
     id: number
@@ -50,6 +52,7 @@ export type RootStateType = {
     dialogPage: DialogPageType
     profilePage: ProfilePageType
     sideBar: SideBarType
+    // usersPage: UsersType[]
 }
 
 export type StoreType = {
@@ -59,7 +62,7 @@ export type StoreType = {
     //addPost: () => void
     //updateNewPostText: (text: string) => void
     subscribe: (observer: () => void) => void
-    dispatch: (action: AddPostActionType | UpdateTestActionType | NewMessageBodyType | SendMessageType) => void
+    dispatch: (action:  ActionTypes ) => void
 
 }
 
@@ -98,12 +101,10 @@ let store: StoreType = {
     subscribe(observer: () => void) {
         this._callSubscriber = observer
     },
-    dispatch(action: AddPostActionType | UpdateTestActionType | NewMessageBodyType | SendMessageType) {
-
+    dispatch(action: ActionTypes) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogPage = dialogsReducer(this._state.dialogPage, action)
         this._state.sideBar = sideBarReducer(this._state.sideBar, action)
-
         this._callSubscriber()
     }
 

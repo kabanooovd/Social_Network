@@ -2,15 +2,18 @@ import {createStore, combineReducers} from 'redux'
 import {profileReducer} from "./profileReducer";
 import {dialogsReducer} from "./dialogsReducer";
 import {sideBarReducer} from "./sideBarReducer";
+import {usersReducer} from "./usersReducer";
 
 let reducers = combineReducers({
     profilePage: profileReducer,
     dialogPage: dialogsReducer,
-    sideBar: sideBarReducer
+    sideBar: sideBarReducer,
+    usersPage: usersReducer
 })
 
-let store: any = createStore(reducers)
+export type AppStateType = ReturnType<typeof reducers>
 
-export default store
+export const store = createStore(reducers)
+
 
 

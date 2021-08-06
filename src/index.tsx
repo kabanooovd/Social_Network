@@ -1,5 +1,5 @@
 import React from 'react';
-import store from "./redux/redux-store";
+import {store} from "./redux/redux-store";
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -11,10 +11,7 @@ ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
             <Provider store={store}>
-                <App state={store.getState()}
-                     dispatch={store.dispatch.bind(store)}
-                     store={store}
-                />
+                <App state={store.getState()} dispatch={store.dispatch.bind(store)}/>
             </Provider>
         </BrowserRouter>
     </React.StrictMode>,
