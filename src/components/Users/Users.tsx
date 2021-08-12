@@ -7,16 +7,15 @@ import user from '../../assets/user.png'
 
 export class Users extends React.Component<UsersPropsType> {
 
-    constructor(props: UsersPropsType) {
-        super(props);
-        if (this.props.usersPage.users.length === 0) {
-            axios.get<any>("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-                this.props.setUsers(response.data.items)
-            });
-        }
+    // constructor(props: UsersPropsType) {
+    //     super(props);
+    // }
+
+    componentDidMount() {
+        axios.get<any>("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+            this.props.setUsers(response.data.items)
+        });
     }
-
-
 
     render() {
         return (
