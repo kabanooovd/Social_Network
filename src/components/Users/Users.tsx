@@ -40,7 +40,6 @@ export const Users = (props: PresentUsersPropsType) => {
                                   props.onPageChanged(el)
                               }}
                         >{" " + el + " "}</span>
-                        // <span className={ this.props.currentPage === el && s.selectedPage }>{el}</span>
                     )
                 })}
             </div>

@@ -1,7 +1,7 @@
 import {
     followActionType,
     setCurrentPageActionType,
-    setTotalUsersCountActionType,
+    setTotalUsersCountActionType, toggleFetchingActionType,
     unFollowActionType,
     UsersToSetActionType
 } from "./usersReducer";
@@ -14,4 +14,5 @@ export type ActionTypes =
     NewMessageBodyType  | SendMessageType       |       // actions of Dialogs
 
     followActionType        | unFollowActionType        |       // actions of UsersContainer
-    UsersToSetActionType    | setCurrentPageActionType  | setTotalUsersCountActionType
+    UsersToSetActionType    | setCurrentPageActionType  | setTotalUsersCountActionType  |
+    toggleFetchingActionType
