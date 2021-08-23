@@ -1,12 +1,8 @@
-import {
-    NewMessageBodyType,
-    SendMessageType,
-} from "./store";
-
-import {ActionTypes} from "./ActionTipizationType";
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE'
+
+
 
 let initialState = {
     dialogs: [
@@ -39,7 +35,9 @@ export type DialogsReducerLocalStateType = {
     messages: MessageType[]
 }
 
-export const dialogsReducer = (state: DialogsReducerLocalStateType = initialState, action: ActionTypes) => {
+type GeneralDialogsActionType = SendMessageTypeAC | UpdateNewMessageBodyCreatorTypeAC
+
+export const dialogsReducer = (state: DialogsReducerLocalStateType = initialState, action: GeneralDialogsActionType) => {
 
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY: {
@@ -54,11 +52,12 @@ export const dialogsReducer = (state: DialogsReducerLocalStateType = initialStat
     }
 }
 
-export const sendMessageCreator = (): SendMessageType =>
-    ({type: SEND_MESSAGE})
-export const UpdateNewMessageBodyCreator = (body: string): NewMessageBodyType =>
-    ({type: UPDATE_NEW_MESSAGE_BODY, body: body})
-
-
-
+type SendMessageTypeAC = ReturnType<typeof sendMessageCreator>
+export const sendMessageCreator = () => {
+    return {type: SEND_MESSAGE} as const
+}
+type UpdateNewMessageBodyCreatorTypeAC = ReturnType<typeof UpdateNewMessageBodyCreator>
+export const UpdateNewMessageBodyCreator = (body: string) => {
+    return {type: UPDATE_NEW_MESSAGE_BODY, body} as const
+}
 

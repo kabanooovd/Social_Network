@@ -9,7 +9,6 @@ import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {Dispatch} from "redux";
-import {UsersReducerLocalStateType} from "../../redux/usersReducer";
 
 type MapStateToPropsType = {
     dialogPage: DialogsReducerLocalStateType

@@ -67,7 +67,6 @@ export class UsersContainer extends React.Component<UsersPropsType> {
 
     render() {
         return <>
-            {/*{this.props.isFetching ? <div><img src={Spinner} className={s.loadingSpinner}/></div> : null  }*/}
             {this.props.isFetching ? <LoadingSpinner/> : null  }
             <Users totalCount={this.props.totalCount}
                           pageSize={this.props.pageSize}

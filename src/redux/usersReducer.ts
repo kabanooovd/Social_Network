@@ -1,5 +1,3 @@
-import {ActionTypes} from "./ActionTipizationType";
-
 export type LocationType = {
     city: string
     country: string
@@ -14,7 +12,7 @@ export type UsersType = {
     location: LocationType
 }
 
-const FOLLOW = "FOLLOW";
+const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
@@ -25,31 +23,30 @@ export type toggleFetchingActionType = {
     type: 'TOGGLE_IS_FETCHING';
     isFetching: boolean
 }
-
 export type setTotalUsersCountActionType = {
     type: 'SET_TOTAL_USERS_COUNT'
     totalCount: number
 }
-
 export type setCurrentPageActionType = {
     type: 'SET_CURRENT_PAGE'
     currentPage: number
 }
-
 export type followActionType = {
     type: 'FOLLOW'
     userID: number
 }
-
 export type unFollowActionType = {
     type: 'UNFOLLOW'
     userID: number
 }
-
 export type UsersToSetActionType = {
     type: 'SET_USERS'
     users: UsersType[]
 }
+
+type GeneralUsersActionTypes =    toggleFetchingActionType      | setTotalUsersCountActionType
+                                | setCurrentPageActionType      | followActionType
+                                | unFollowActionType            | UsersToSetActionType
 
 export type UsersReducerLocalStateType = {
     users: UsersType[]
@@ -59,8 +56,7 @@ export type UsersReducerLocalStateType = {
     isFetching: boolean
 }
 
-
-let initialState: UsersReducerLocalStateType = {
+    let initialState: UsersReducerLocalStateType = {
     users: [ ],
     pageSize: 25,
     totalCount: 0,
@@ -68,7 +64,10 @@ let initialState: UsersReducerLocalStateType = {
     isFetching: false
 }
 
-export const usersReducer = (state: UsersReducerLocalStateType = initialState, action: ActionTypes): UsersReducerLocalStateType => {
+
+
+
+export const usersReducer = (state: UsersReducerLocalStateType = initialState, action: GeneralUsersActionTypes): UsersReducerLocalStateType => {
 
     switch (action.type) {
         case FOLLOW: {
