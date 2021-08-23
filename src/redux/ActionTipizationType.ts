@@ -1,4 +1,10 @@
-import {followActionType, unFollowActionType, UsersToSetActionType} from "./usersReducer";
+import {
+    followActionType,
+    setCurrentPageActionType,
+    setTotalUsersCountActionType,
+    unFollowActionType,
+    UsersToSetActionType
+} from "./usersReducer";
 import {AddPostActionType, NewMessageBodyType, SendMessageType, UpdateTestActionType} from "./store";
 
 
@@ -7,5 +13,5 @@ export type ActionTypes =
 
     NewMessageBodyType  | SendMessageType       |       // actions of Dialogs
 
-    followActionType    | unFollowActionType    |       // actions of UsersContainer
-    UsersToSetActionType
+    followActionType        | unFollowActionType        |       // actions of UsersContainer
+    UsersToSetActionType    | setCurrentPageActionType  | setTotalUsersCountActionType

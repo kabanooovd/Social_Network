@@ -7,7 +7,7 @@ export type LocationType = {
 
 export type UsersType = {
     id: number
-    photoURL: string
+    photos: string
     followed: boolean
     name: string
     status: string
@@ -17,6 +17,18 @@ export type UsersType = {
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
+
+export type setTotalUsersCountActionType = {
+    type: 'SET_TOTAL_USERS_COUNT'
+    totalCount: number
+}
+
+export type setCurrentPageActionType = {
+    type: 'SET_CURRENT_PAGE'
+    currentPage: number
+}
 
 export type followActionType = {
     type: 'FOLLOW'
@@ -35,24 +47,17 @@ export type UsersToSetActionType = {
 
 export type UsersReducerLocalStateType = {
     users: UsersType[]
+    pageSize: number
+    totalCount: number
+    currentPage: number
 }
 
 
 let initialState: UsersReducerLocalStateType = {
-    users: [
-        // {id: 1,
-        //     photoURL: 'https://im0-tub-ru.yandex.net/i?id=72a5389fde239442c135b79511a43758-l&ref=rim&n=13&w=1080&h=1080' ,
-        //     followed: true, fullName: 'Dimas', status: 'student', location: {city: 'FishBurg', country: 'RF'}},
-        // {id: 2,
-        //     photoURL: 'https://im0-tub-ru.yandex.net/i?id=72a5389fde239442c135b79511a43758-l&ref=rim&n=13&w=1080&h=1080' ,
-        //     followed: false, fullName: 'Sashsa', status: 'worker', location: {city: 'Moscow', country: 'RF'}},
-        // {id: 3,
-        //     photoURL: 'https://im0-tub-ru.yandex.net/i?id=72a5389fde239442c135b79511a43758-l&ref=rim&n=13&w=1080&h=1080' ,
-        //     followed: true, fullName: 'Masha', status: 'waitress', location: {city: 'Kiev', country: 'Ukraine'}},
-        // {id: 4,
-        //     photoURL: 'https://im0-tub-ru.yandex.net/i?id=72a5389fde239442c135b79511a43758-l&ref=rim&n=13&w=1080&h=1080' ,
-        //     followed: false, fullName: 'Pashsa', status: 'rocker', location: {city: 'Minsk', country: 'RB'}},
-    ]
+    users: [ ],
+    pageSize: 25,
+    totalCount: 0,
+    currentPage: 1,
 }
 
 export const usersReducer = (state: UsersReducerLocalStateType = initialState, action: ActionTypes): UsersReducerLocalStateType => {
@@ -65,7 +70,13 @@ export const usersReducer = (state: UsersReducerLocalStateType = initialState, a
             return {...state, users: state.users.map(el => el.id === action.userID? {...el, followed: true} : el)}
         }
         case SET_USERS: {
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: [...action.users]}
+        }
+        case SET_CURRENT_PAGE: {
+            return {...state, currentPage: action.currentPage}
+        }
+        case SET_TOTAL_USERS_COUNT: {
+            return {...state, totalCount: action.totalCount}
         }
 
         default:
@@ -76,7 +87,8 @@ export const usersReducer = (state: UsersReducerLocalStateType = initialState, a
 export const followAC = (userID: number): followActionType => ({type: FOLLOW, userID})
 export const unFollowAC = (userID: number): unFollowActionType => ({type: UNFOLLOW, userID})
 export const setUsersAC = (users: UsersType[]): UsersToSetActionType => ({type: SET_USERS, users})
-
+export const setCurrentPageAC = (currentPage: number): setCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage})
+export const setTotalUsersCountAC = (totalCount: number): setTotalUsersCountActionType => ({type: SET_TOTAL_USERS_COUNT, totalCount})
 
 
 
