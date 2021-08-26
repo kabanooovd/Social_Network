@@ -31,7 +31,7 @@ let initialState: ProfileReducerLocalStateType = {
         {id: 1, message: 'Hey mate', likesCount: 5},
         {id: 2, message: 'Did you understand what is it props?', likesCount: 100}
     ],
-    // profile: any
+    //profile: null
     profile: {
         userId: 0,
         lookingForAJob: false,

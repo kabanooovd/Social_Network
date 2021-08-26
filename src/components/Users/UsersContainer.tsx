@@ -1,7 +1,6 @@
 import React from "react";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
-import s from './Users.module.css'
 import {
     followAC,
     LocationType,
@@ -13,7 +12,6 @@ import {
 import {AppStateType} from "../../redux/redux-store";
 import axios from "axios";
 import {Users} from "./Users";
-import Spinner from '../../assets/Spinner.gif'
 import {LoadingSpinner} from "../common/LoadingSpinner/LoadingSpinner";
 
 type UsersType = {
