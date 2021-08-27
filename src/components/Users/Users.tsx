@@ -22,6 +22,8 @@ type PresentUsersPropsType = {
     users:UsersType[]
     follow: (id: number) => void
     unfollow: (id: number) => void
+    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
+    followingInProgress: number[]
 }
 
 export const Users = (props: PresentUsersPropsType) => {
@@ -48,6 +50,7 @@ export const Users = (props: PresentUsersPropsType) => {
             {
                 props.users.map(u => {
                     const ToFollowBtnHandler = () => {
+                        props.toggleFollowingProgress(true, u.id)
                         axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {}, {
                             withCredentials: true,
                             headers: {
@@ -58,9 +61,11 @@ export const Users = (props: PresentUsersPropsType) => {
                                 if (response.data.resultCode === 0) {
                                     props.unfollow(u.id)
                                 }
+                                props.toggleFollowingProgress(false, u.id)
                             });
                     }
                     const ToUnFollowBtnHandler = () => {
+                        props.toggleFollowingProgress(true, u.id)
                         axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {
                             withCredentials: true,
                             headers: {
@@ -71,6 +76,7 @@ export const Users = (props: PresentUsersPropsType) => {
                                 if (response.data.resultCode === 0) {
                                     props.follow(u.id)
                                 }
+                                props.toggleFollowingProgress(false, u.id)
                             });
                     }
                     return (
@@ -85,8 +91,8 @@ export const Users = (props: PresentUsersPropsType) => {
                         <div>
                             {
                                 !u.followed
-                                    ? <button onClick={ToFollowBtnHandler}>Follow</button>
-                                    : <button onClick={ToUnFollowBtnHandler}>Un Follow</button>
+                                    ? <button onClick={ToFollowBtnHandler} disabled={props.followingInProgress.some(el => el === u.id)}>Follow</button>
+                                    : <button onClick={ToUnFollowBtnHandler} disabled={props.followingInProgress.some(el => el === u.id)}>Un Follow</button>
                             }
                         </div>
                     </span>

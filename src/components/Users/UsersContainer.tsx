@@ -2,7 +2,7 @@ import React from "react";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {
-    followAC,
+    followAC, followingInProgressAC,
     LocationType,
     setCurrentPageAC, setIsFetchingAC, setTotalUsersCountAC,
     setUsersAC,
@@ -29,6 +29,7 @@ type MapStateToPropsType = {
     totalCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: number[]
 }
 
 type MapDispatchToPropsType = {
@@ -38,6 +39,7 @@ type MapDispatchToPropsType = {
     setCurrentPage: (pageNumber: number) => void
     setTotalUsersCount: (totalCount: number) => void
     setIsFetching: (isFetching: boolean) => void
+    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
 }
 
 export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -85,6 +87,8 @@ export class UsersContainer extends React.Component<UsersPropsType> {
                           users={this.props.usersPage.users}
                           follow={this.props.follow}
                           unfollow={this.props.unfollow}
+                          toggleFollowingProgress={this.props.toggleFollowingProgress}
+                          followingInProgress={this.props.followingInProgress}
             />
         </>
     }
@@ -96,7 +100,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         pageSize: state.usersPage.pageSize,
         totalCount: state.usersPage.totalCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -119,7 +124,11 @@ const mapDispatchToProps = (dispatch: Dispatch ): MapDispatchToPropsType => {
         },
         setIsFetching: (isFetching: boolean) => {
             dispatch(setIsFetchingAC(isFetching))
+        },
+        toggleFollowingProgress: (isFetching: boolean, userId: number) => {
+            dispatch(followingInProgressAC(isFetching, userId))
         }
+
     }
 }
 
