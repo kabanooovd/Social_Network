@@ -73,41 +73,6 @@ export const Users = (props: PresentUsersPropsType) => {
                                 }
                             });
                     }
-                    // const ToFollowBtnHandler = () => {
-                    //     axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {
-                    //         withCredentials: true,
-                    //         headers: {
-                    //             "API-KEY": "7121752a-cd45-46e5-a73c-32630b1d9cc6"
-                    //         }
-                    //     })
-                    //         .then(response => {
-                    //             if (response.data.resultCode === 0) {
-                    //                 props.follow(u.id)
-                    //             }
-                    //             // this.props.setIsFetching(false)
-                    //             // this.props.setUsers(response.data.items)
-                    //             // this.props.setTotalUsersCount(response.data.totalCount)
-                    //         });
-                    //     // props.follow(u.id)
-                    // }
-                    //
-                    // const ToUnFollowBtnHandler = () => {
-                    //     axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {}, {
-                    //         withCredentials: true,
-                    //         headers: {
-                    //             "API-KEY": "7121752a-cd45-46e5-a73c-32630b1d9cc6"
-                    //         }
-                    //     })
-                    //         .then(response => {
-                    //             if (response.data.resultCode === 0) {
-                    //                 props.unfollow(u.id)
-                    //             }
-                    //         });
-                    //
-                    //
-                    //     // props.unfollow(u.id)
-                    //
-                    // }
                     return (
                         <div key={u.id}>
 
