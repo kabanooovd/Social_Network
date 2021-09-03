@@ -1,3 +1,11 @@
+import {usersAPI} from "../api/api";
+import {Dispatch} from "redux";
+import {AppStateType} from "./redux-store";
+import { ThunkAction } from "redux-thunk";
+import {Action, AnyAction} from 'redux'
+
+export type ThunkType<TAction extends Action = AnyAction> = ThunkAction<Promise<void>, AppStateType, unknown, TAction>
+
 export type LocationType = {
     city: string
     country: string
@@ -5,7 +13,7 @@ export type LocationType = {
 
 export type UsersType = {
     id: number
-    photos: string
+    photos: {small: string, large: string}
     followed: boolean
     name: string
     status: string
@@ -109,13 +117,52 @@ export const usersReducer = (state: UsersReducerLocalStateType = initialState, a
     }
 }
 
-export const followAC = (userID: number): followActionType => ({type: FOLLOW, userID})
-export const unFollowAC = (userID: number): unFollowActionType => ({type: UNFOLLOW, userID})
+export const followACSuccess = (userID: number): followActionType => ({type: FOLLOW, userID})
+export const unFollowACSuccess = (userID: number): unFollowActionType => ({type: UNFOLLOW, userID})
 export const setUsersAC = (users: UsersType[]): UsersToSetActionType => ({type: SET_USERS, users})
 export const setCurrentPageAC = (currentPage: number): setCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage})
 export const setTotalUsersCountAC = (totalCount: number): setTotalUsersCountActionType => ({type: SET_TOTAL_USERS_COUNT, totalCount})
 export const setIsFetchingAC = (isFetching: boolean): toggleFetchingActionType => ({type: TOGGLE_IS_FETCHING, isFetching})
 export const followingInProgressAC = (isFetching: boolean, userId: number): followingInProgressActionType => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId})
+
+// Создаем thunk
+export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkType<toggleFetchingActionType | UsersToSetActionType | setTotalUsersCountActionType> => {
+    return async (dispatch, getState) => {
+        dispatch(setIsFetchingAC(true))
+        usersAPI.getUsers(currentPage, pageSize).then(data => {
+            dispatch(setIsFetchingAC(false))
+            dispatch(setUsersAC(data.items))
+            //dispatch(setCurrentPageAC(data))
+            dispatch(setTotalUsersCountAC(data.totalCount))
+        });
+    }
+}
+
+export const followTC = (userID: number) => {
+    return async (dispatch: Dispatch) => {
+        dispatch(followingInProgressAC(true, userID))
+        usersAPI.follow(userID)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(unFollowACSuccess(userID))
+                }
+                dispatch(followingInProgressAC(false, userID))
+            });
+    }
+}
+
+export const unfollowTC = (userID: number) => {
+    return async (dispatch: Dispatch) => {
+        dispatch(followingInProgressAC(true, userID))
+        usersAPI.unfollow(userID)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(followACSuccess(userID))
+                }
+                dispatch(followingInProgressAC(false, userID))
+            });
+    }
+}
 
 
 

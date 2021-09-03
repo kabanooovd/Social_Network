@@ -3,11 +3,10 @@ import s from "./Users.module.css";
 import user from "../../assets/user.png";
 import {LocationType} from "../../redux/usersReducer";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
 
 type UsersType = {
     id: number
-    photos: string
+    photos: {small: string, large: string}
     followed: boolean
     name: string
     status: string
@@ -20,9 +19,9 @@ type PresentUsersPropsType = {
     currentPage: number
     onPageChanged: (pageNumber: number) => void
     users:UsersType[]
-    follow: (id: number) => void
-    unfollow: (id: number) => void
-    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
+    followTC: (id: number) => void
+    unfollowTC: (id: number) => void
+    // toggleFollowingProgress: (isFetching: boolean, userId: number) => void
     followingInProgress: number[]
 }
 
@@ -34,12 +33,15 @@ export const Users = (props: PresentUsersPropsType) => {
         pages.push(i)
     }
 
+    console.log(props.currentPage)
+
     return (
         <div>
             <div>
-                {pages.map(el => {
+                {pages.map((el, index) => {
                     return (
-                        <span className={props.currentPage === el ? s.selectedPage : ''}
+                        <span key={index}
+                              className={props.currentPage === el ? s.selectedPage : ''}
                               onClick={(e) => {
                                   props.onPageChanged(el)
                               }}
@@ -50,34 +52,10 @@ export const Users = (props: PresentUsersPropsType) => {
             {
                 props.users.map(u => {
                     const ToFollowBtnHandler = () => {
-                        props.toggleFollowingProgress(true, u.id)
-                        axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {}, {
-                            withCredentials: true,
-                            headers: {
-                                "API-KEY": "7121752a-cd45-46e5-a73c-32630b1d9cc6"
-                            }
-                        })
-                            .then(response => {
-                                if (response.data.resultCode === 0) {
-                                    props.unfollow(u.id)
-                                }
-                                props.toggleFollowingProgress(false, u.id)
-                            });
+                        props.followTC(u.id)
                     }
                     const ToUnFollowBtnHandler = () => {
-                        props.toggleFollowingProgress(true, u.id)
-                        axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {
-                            withCredentials: true,
-                            headers: {
-                                "API-KEY": "7121752a-cd45-46e5-a73c-32630b1d9cc6"
-                            }
-                        })
-                            .then(response => {
-                                if (response.data.resultCode === 0) {
-                                    props.follow(u.id)
-                                }
-                                props.toggleFollowingProgress(false, u.id)
-                            });
+                        props.unfollowTC(u.id)
                     }
                     return (
                         <div key={u.id}>
@@ -85,7 +63,7 @@ export const Users = (props: PresentUsersPropsType) => {
                     <span>
                         <div className={s.photoURL}>
                             <NavLink to={'/profile/' + u.id}>
-                                <img className={s.photoURLStyle} src={u.photos.small != null ? u.photos : user}/>
+                                <img src={u.photos.small != null ? u.photos.small : user} className={s.photoURLStyle} />
                             </NavLink>
                         </div>
                         <div>
@@ -99,11 +77,11 @@ export const Users = (props: PresentUsersPropsType) => {
                             <span>
                         <span>
                             <div>{u.name}</div>
-                            <div>{u.status}</div>
+                            <div>{u.status ? u.status : 'no status'}</div>
                         </span>
                         <span>
-                            <div>{"u.location.country"}</div>
-                            <div>{'u.location.city'}</div>
+                            {/*<div>{'u.location.country'}</div>*/}
+                            {/*<div>{'u.location.city'}</div>*/}
                         </span>
                     </span>
                         </div>

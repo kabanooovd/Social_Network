@@ -36,7 +36,8 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
             </div>
             <div className={s.profilePerson}>
                 <img src={props.profile.photos.small} className={s.userAva} />
-                ava + description
+                {/*ava + description*/}
+                {props.profile.fullName}
             </div>
         </div>
     )
