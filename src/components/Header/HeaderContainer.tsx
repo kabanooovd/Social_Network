@@ -3,19 +3,12 @@ import Header from "./Header";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {getAuthUserDataTC} from "../../redux/auth-reducer";
-import {authAPI} from "../../api/api";
 
 export type HeaderPropsType = MapDispatchToPropsType & MapStateToPropsType
 class HeaderContainer extends React.Component<HeaderPropsType> {
 
     componentDidMount() {
         this.props.getAuthUserDataTC()
-        // authAPI.me().then(response => {
-        //         if (response.data.resultCode === 0) {
-        //             let {id, email, login} = response.data.data
-        //             this.props.setAuthUserDataAC(id, email, login)
-        //         }
-        //     });
     }
 
     render() {

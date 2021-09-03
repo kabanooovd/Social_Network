@@ -4,6 +4,7 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
 import {DialogPagePropsType} from "./DialogsContainer";
+import { Redirect } from 'react-router-dom';
 
 
 const Dialogs = (props: DialogPagePropsType) => {
@@ -26,6 +27,8 @@ const Dialogs = (props: DialogPagePropsType) => {
     const enterPressed = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter') onSendMessageClick()
     }
+
+    if (!props.isAuth) return <Redirect to={'/login'}/>
 
     return (
         <div className={s.dialogs}>

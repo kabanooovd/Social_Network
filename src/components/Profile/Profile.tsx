@@ -7,6 +7,8 @@ import {ProfileContainerPropsType} from "./ProfileContainer";
 type ProfilePropsType = ProfileContainerPropsType
 
 const Profile = (props: ProfilePropsType) => {
+
+
     return (
         <div className={s.content}>
             <ProfileInfo profile={props.profile}/>
