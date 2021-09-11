@@ -28,7 +28,7 @@ const Dialogs = (props: DialogPagePropsType) => {
         if (e.key === 'Enter') onSendMessageClick()
     }
 
-    if (!props.isAuth) return <Redirect to={'/login'}/>
+    // if (!props.isAuth) return <Redirect to={'/login'}/>
 
     return (
         <div className={s.dialogs}>

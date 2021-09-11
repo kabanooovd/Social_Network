@@ -1,4 +1,5 @@
 import {authAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -12,12 +13,9 @@ type AuthUserDataType = {
 export type setUserDataActionType = {
     type: 'SET_USER_DATA';
     data: AuthUserDataType
-    //isFetching: boolean
 }
 
-
 type GeneralUsersActionTypes = setUserDataActionType
-
 
 let initialState: AuthUserDataType = {
     id: '',
@@ -32,7 +30,6 @@ export const authReducer = (state: AuthUserDataType = initialState, action: Gene
         case SET_USER_DATA: {
             return {...state, ...action.data, isAuth: true}
         }
-
         default:
             return state
     }
@@ -42,8 +39,7 @@ export const setAuthUserDataAC = (id: string, email: string, login: string):setU
     return {type: "SET_USER_DATA", data: {id, email, login, isAuth: false}}
 }
 
-
-export const getAuthUserDataTC = () => (dispatch: any) => {
+export const getAuthUserDataTC = () => (dispatch: Dispatch) => {
     authAPI.me().then(response => {
         if (response.data.resultCode === 0) {
             let {id, email, login} = response.data.data
@@ -51,6 +47,3 @@ export const getAuthUserDataTC = () => (dispatch: any) => {
         }
     })
 }
-
-
-
