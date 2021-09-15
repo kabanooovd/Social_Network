@@ -33,7 +33,7 @@ export const Users = (props: PresentUsersPropsType) => {
         pages.push(i)
     }
 
-    console.log(props.currentPage)
+    // console.log(props.currentPage)
 
     return (
         <div>

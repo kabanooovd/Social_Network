@@ -8,6 +8,7 @@ import {AppStateType} from "../../redux/redux-store";
 import {Users} from "./Users";
 import {LoadingSpinner} from "../common/LoadingSpinner/LoadingSpinner";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 type MapStateToPropsType = {
     usersPage: UsersReducerLocalStateType
@@ -66,9 +67,9 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-let AuthRedirectComponent = withAuthRedirect(UsersContainer)
-
-export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
-    followTC, unfollowTC, setCurrentPageAC, followingInProgressAC, getUsersThunkCreator,
-}) (AuthRedirectComponent)
-
+export default compose<React.ComponentType>(
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
+        followTC, unfollowTC, setCurrentPageAC, followingInProgressAC, getUsersThunkCreator
+    }),
+    withAuthRedirect
+)(UsersContainer)
