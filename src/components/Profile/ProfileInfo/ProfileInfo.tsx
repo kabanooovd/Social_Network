@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './ProfileInfo.module.css'
+import ProfileStatus from "./ProfileStatus/ProfileStatus";
 
 type ProfileType = {
     userId: number
@@ -32,12 +33,13 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
     return (
         <div>
             <div className={s.profileImg}>
-                <img src='http://s3.fotokto.ru/photo/full/319/3199886.jpg' alt=""/>
+                {/*<img src='http://s3.fotokto.ru/photo/full/319/3199886.jpg' alt=""/>*/}
             </div>
             <div className={s.profilePerson}>
                 <img src={props.profile.photos.small} className={s.userAva} />
                 {/*ava + description*/}
                 {props.profile.fullName}
+                <ProfileStatus status={'experimental status'}/>
             </div>
         </div>
     )
