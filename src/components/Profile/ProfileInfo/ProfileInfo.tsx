@@ -27,6 +27,8 @@ type ContactsForProfileType = {
 
 type ProfileInfoPropsType = {
     profile: ProfileType
+    updateStatusTC: (status: string) => void
+    status: string
 }
 
 const ProfileInfo = (props: ProfileInfoPropsType) => {
@@ -39,7 +41,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                 <img src={props.profile.photos.small} className={s.userAva} />
                 {/*ava + description*/}
                 {props.profile.fullName}
-                <ProfileStatus status={'experimental status'}/>
+                <ProfileStatus status={props.status} updateStatusTC={props.updateStatusTC}/>
             </div>
         </div>
     )
