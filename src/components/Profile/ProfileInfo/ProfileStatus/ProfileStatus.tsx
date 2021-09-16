@@ -6,11 +6,17 @@ type ProfileStatusT = {
     updateStatusTC: (status: string) => void
 }
 
+type stateT = {
+    editMode: boolean
+    status: string
+}
+
 // learning local state with no hooks like we did in TDL editable span but by using class component
 class ProfileStatus extends React.Component<ProfileStatusT> {
 
 
-    state = {
+
+    state: stateT = {
         editMode: false,
         status: this.props.status,
     }
@@ -32,6 +38,14 @@ class ProfileStatus extends React.Component<ProfileStatusT> {
         this.setState({
             status: e.currentTarget.value
         })
+    }
+
+    componentDidUpdate(prevProps: ProfileStatusT, prevState: stateT) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
     }
 
 
