@@ -1,17 +1,21 @@
 import React from "react";
+import {FormDataT, ReduxLoginForm} from "./LoginForm/LoginForm";
 
-type LoginPropsType = {
 
-}
+export const Login = () => {
 
-export const Login = (props: LoginPropsType) => {
+    const onSubmit = (formData: FormDataT) => {
+        console.log(formData)
+    }
 
-    return(
+    return (
         <div>
             <h1>LOGIN</h1>
+            <ReduxLoginForm onSubmit={onSubmit}/>
         </div>
     )
 }
+
 
 
 
