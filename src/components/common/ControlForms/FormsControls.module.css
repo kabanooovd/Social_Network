@@ -1,0 +1,32 @@
+
+/*.form-control {*/
+
+/*}*/
+
+
+.formControl.error input,
+.formControl.error textarea
+{
+    outline: none;
+    border: 2px solid red;
+}
+
+.formControl.error span
+{
+    color: red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
