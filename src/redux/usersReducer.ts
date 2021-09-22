@@ -129,12 +129,13 @@ export const followingInProgressAC = (isFetching: boolean, userId: number): foll
 export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkType<toggleFetchingActionType | UsersToSetActionType | setTotalUsersCountActionType> => {
     return async (dispatch, getState) => {
         dispatch(setIsFetchingAC(true))
-        usersAPI.getUsers(currentPage, pageSize).then(data => {
-            dispatch(setIsFetchingAC(false))
-            dispatch(setUsersAC(data.items))
-            //dispatch(setCurrentPageAC(data))
-            dispatch(setTotalUsersCountAC(data.totalCount))
-        });
+        usersAPI.getUsers(currentPage, pageSize)
+            .then(data => {
+                dispatch(setIsFetchingAC(false))
+                dispatch(setUsersAC(data.items))
+                //dispatch(setCurrentPageAC(data))
+                dispatch(setTotalUsersCountAC(data.totalCount))
+            });
     }
 }
 
