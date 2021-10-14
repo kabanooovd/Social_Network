@@ -1,16 +1,10 @@
 import React from 'react';
 import s from './Header.module.css'
 import {HeaderPropsType} from "./HeaderContainer";
-import {useDispatch} from "react-redux";
-import {logout_TC} from "../../redux/auth-reducer";
-import {ErrorHandler} from "../ErrorHandler/ErrorHandler";
 
 const Header = (props: HeaderPropsType) => {
 
-    //const dispatch = useDispatch()
-
     const logoutHandler = () => {
-        // dispatch(logout_TC())
         props.logout_TC()
     }
 

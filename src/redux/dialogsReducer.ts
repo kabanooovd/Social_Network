@@ -1,5 +1,5 @@
 const SEND_MESSAGE = 'SEND-MESSAGE'
-
+const FILL_MSG = 'DIALOGS/UPDATE-MSG-FIELD'
 
 
 let initialState = {
@@ -30,20 +30,29 @@ export type MessageType = {
 export type DialogsReducerLocalStateType = {
     dialogs: DialogsType[]
     messages: MessageType[]
+    newMessageBody: string
 }
 
-type GeneralDialogsActionType = SendMessageTypeAC
+type GeneralDialogsActionType = SendMessageTypeAC | UpdateMessageFieldAC_T
 
 export const dialogsReducer = (state: DialogsReducerLocalStateType = initialState, action: GeneralDialogsActionType) => {
 
     switch (action.type) {
         case SEND_MESSAGE: {
             let body = action.newMessageBody;
-            return {...state, messages: [...state.messages, {id: 6, message: body}]}
+            return {...state, messages: [...state.messages, {id: 6, message: body}], newMessageBody: ''}
+        }
+        case FILL_MSG: {
+            return {...state, newMessageBody: action.newMessageBody}
         }
         default:
             return state
     }
+}
+
+type UpdateMessageFieldAC_T = ReturnType<typeof updateMessageFieldAC>
+export const updateMessageFieldAC = (newMessageBody: string) => {
+    return {type: FILL_MSG, newMessageBody} as const
 }
 
 type SendMessageTypeAC = ReturnType<typeof sendMessageCreator>

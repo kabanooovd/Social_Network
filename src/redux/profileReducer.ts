@@ -4,6 +4,7 @@ import {Dispatch} from "redux";
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
+const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
 
 export type ProfileType = {
     userId: number
@@ -33,6 +34,7 @@ let initialState: ProfileReducerLocalStateType = {
         {id: 1, message: 'Hey mate', likesCount: 5},
         {id: 2, message: 'Did you understand what is it props?', likesCount: 100}
     ],
+    newPostText: '',
     //profile: null
     profile: {
         userId: 0,
@@ -68,23 +70,25 @@ export type PostsType = {
 type ProfileReducerLocalStateType = {
     posts: PostsType[]
     profile: ProfileType
+    newPostText: string
     status: string
 }
 
 type GeneralProfileActionType = AddPostActionType           |
-                                setUserProfileActionType    | setStatusACActionType
+                                setUserProfileActionType    |
+                                setStatusACActionType       |
+                                UpdateTestActionType
 
 export const profileReducer = (state: ProfileReducerLocalStateType = initialState, action: GeneralProfileActionType) => {
 
-    //et stateCopy;
     switch (action.type) {
         case ADD_POST: {
             let newPost = {id: 5, message: action.postMessage, likesCount: 0};
-            return {...state, posts: [newPost, ...state.posts]}
+            return {...state, posts: [newPost, ...state.posts], newPostText: ''}
         }
-        // case UPDATE_NEW_POST_TEXT: {
-        //     return {...state, newPostText: action.text}
-        // }
+        case UPDATE_NEW_POST_TEXT: {
+            return {...state, newPostText: action.text}
+        }
         case SET_USER_PROFILE: {
             return {...state, profile: action.profile}
         }
@@ -104,9 +108,9 @@ export type AddPostActionType = ReturnType<typeof addPostActionCreator>
 export const addPostActionCreator = (newPostText: string) =>
     ({type: ADD_POST, postMessage: newPostText}) as const
 
-// export type UpdateTestActionType = ReturnType<typeof UpdateNewPostTextActionCreator>
-// export const UpdateNewPostTextActionCreator = (text: string) =>
-//     ({type: UPDATE_NEW_POST_TEXT, text: text}) as const
+export type UpdateTestActionType = ReturnType<typeof UpdateNewPostTextActionCreator>
+export const UpdateNewPostTextActionCreator = (text: string) =>
+    ({type: UPDATE_NEW_POST_TEXT, text: text}) as const
 
 export type setUserProfileActionType = ReturnType<typeof setUserProfile>
 export const setUserProfile = (profile: ProfileType) => {
@@ -126,9 +130,6 @@ export const updateStatusTC = (status: string) => (dispatch: Dispatch) => {
         }
     })
 }
-
-
-
 
 export const getUserProfileTC = (userId: string) => (dispatch: Dispatch) => {
     usersAPI.getProfile(userId).then(response => {

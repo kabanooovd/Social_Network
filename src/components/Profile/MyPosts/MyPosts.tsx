@@ -2,7 +2,6 @@ import React from 'react';
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {ProfilePageType} from "./MyPostsContainer";
-import {AddNewPostFormRedux, PostsDataT} from "./Post/AddNewPostFormRedux";
 
 const MyPosts = (props: ProfilePageType) => {
 
@@ -10,7 +9,13 @@ const MyPosts = (props: ProfilePageType) => {
                                                               likesCount={arrElement.likesCount}
     />)
 
-    let onAddPost = (values: PostsDataT) => props.addPost(values.newPostText)
+    let onAddPost = () => {
+        props.addPost(props.newPostText)
+    }
+
+    const updateTextHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        props.updatePostTextValues(e.currentTarget.value)
+    }
 
     return (
         <div>
@@ -18,7 +23,10 @@ const MyPosts = (props: ProfilePageType) => {
                 <span>
                     <h3>My posts</h3>
                 </span>
-                <AddNewPostFormRedux onSubmit={onAddPost}/>
+                <textarea onChange={updateTextHandler} value={props.newPostText} />
+                <div>
+                    <button onClick={onAddPost}>Post</button>
+                </div>
             </div>
             <div className={s.posts}>{postsElements}</div>
         </div>
