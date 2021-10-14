@@ -14,7 +14,6 @@ import {Login} from "./components/Login/Login";
 
 const App = () => {
     return (
-
         /*<BrowserRouter>*/
         <div className='app-wrapper'>
             <HeaderContainer />
