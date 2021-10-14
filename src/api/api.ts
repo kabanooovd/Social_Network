@@ -30,6 +30,12 @@ export const usersAPI =     {
 export const authAPI = {
     me() {
         return instance.get('auth/me')
+    },
+    login(data: loginRequestData_T) {
+        return instance.post<CommonRequest_T<{userId: number}>>(`/auth/login`, data)
+    },
+    logout() {
+        return instance.delete<CommonRequest_T<{}>>(`/auth/login`)
     }
 }
 
@@ -48,5 +54,17 @@ export const profileAPI =     {
 
 
 
+type CommonRequest_T<T> = {
+    resultCode: number
 
+    messages: string[]
+    data: T
+}
+
+type loginRequestData_T = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: boolean
+}
 

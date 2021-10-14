@@ -2,14 +2,22 @@ import React from "react";
 import st from './Login.module.css'
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
+import {login_TC} from "../../redux/auth-reducer";
+import {AppStateType} from "../../redux/redux-store";
+import {Redirect} from "react-router-dom";
+import {ErrorHandler} from "../ErrorHandler/ErrorHandler";
+import {ErrorMode_T} from "../../redux/common-data-reducer";
 
 export const Login = () => {
-
 
     const minPasswordLength = 5
     const maxPasswordLength = 25
 
     const dispatch = useDispatch()
+
+    const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
+    const userID = useSelector<AppStateType, string>(state => state.auth.id)
+    const errorMode = useSelector<AppStateType, ErrorMode_T>(state => state.commonData.errorMode)
 
     type Values_T = {
         email?: string
@@ -40,67 +48,68 @@ export const Login = () => {
         },
         validate,
         onSubmit: values => {
-            // dispatch(login_TC(values))
+            const {email, password, rememberMe} = values
+            dispatch(login_TC(email, password, rememberMe))
             formik.resetForm();
         },
     });
 
-    // if (isLogged) {
-    //     return <Redirect to={'/'}/>
-    // }
+    if (isAuth) {
+        return <Redirect to={`/profile/${userID}/`}/>
+    }
 
     return (
-        <div className={st.loginWrapper}>
-            <div>
-                <p>To log in get registered
-                    <a href={'https://social-network.samuraijs.com/'}
-                       target={'_blank'}> here
-                    </a>
-                </p>
-                <p>or use common test account credentials:</p>
-                <p>Email: free@samuraijs.com</p>
-                <p>Password: free</p>
-            </div>
-            <div className={st.formWrapper}>
-                <form className={st.formWrapper} onSubmit={formik.handleSubmit}>
-                    <div className={st.inputContainerStyles}>
+        <div>
+            {errorMode !== null && <ErrorHandler/>}
+            <div className={st.loginWrapper}>
+                <div>
+                    <p>To log in get registered
+                        <a href={'https://social-network.samuraijs.com/'}
+                           target={'_blank'}> here
+                        </a>
+                    </p>
+                    <p>or use common test account credentials:</p>
+                    <p>Email: free@samuraijs.com</p>
+                    <p>Password: free</p>
+                </div>
+                <div className={st.formWrapper}>
+                    <form className={st.formWrapper} onSubmit={formik.handleSubmit}>
+                        <div className={st.inputContainerStyles}>
                         <span>
                             Insert email address please:
                         </span>
-                        <input type="email"
-                               {...formik.getFieldProps('email')}
-                        />
-                        {formik.touched.email && formik.errors.email &&
-                        <div className={st.errorStyles}>{formik.errors.email}</div>}
-                    </div>
-                    <div className={st.inputContainerStyles}>
+                            <input type="email"
+                                   {...formik.getFieldProps('email')}
+                            />
+                            {formik.touched.email && formik.errors.email &&
+                            <div className={st.errorStyles}>{formik.errors.email}</div>}
+                        </div>
+                        <div className={st.inputContainerStyles}>
                         <span>
                             Insert password please:
                         </span>
-                        <input type="password"
-                               {...formik.getFieldProps('password')}
-                        />
-                        {formik.touched.password && formik.errors.password &&
-                        <div className={st.errorStyles}>{formik.errors.password}</div>}
-                    </div>
-                    <div className={st.checkboxStyles}>
-                        <input type="checkbox"
-                               checked={formik.values.rememberMe}
-                               {...formik.getFieldProps('rememberMe')}
-                        /> Remember me
-                    </div>
-                    <div className={st.loginButtonStyles}>
+                            <input type="password"
+                                   {...formik.getFieldProps('password')}
+                            />
+                            {formik.touched.password && formik.errors.password &&
+                            <div className={st.errorStyles}>{formik.errors.password}</div>}
+                        </div>
+                        <div className={st.checkboxStyles}>
+                            <input type="checkbox"
+                                   checked={formik.values.rememberMe}
+                                   {...formik.getFieldProps('rememberMe')}
+                            /> Remember me
+                        </div>
+                        <div className={st.loginButtonStyles}>
 
-                        <button type={'submit'}>Login</button>
-                    </div>
-                </form>
+                            <button type={'submit'}>Login</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     )
 }
-
-
-
 
 
 
