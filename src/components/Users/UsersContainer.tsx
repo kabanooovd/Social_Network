@@ -71,5 +71,5 @@ export default compose<React.ComponentType>(
     connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
         followTC, unfollowTC, setCurrentPageAC, followingInProgressAC, getUsersThunkCreator
     }),
-    withAuthRedirect
+    // withAuthRedirect
 )(UsersContainer)

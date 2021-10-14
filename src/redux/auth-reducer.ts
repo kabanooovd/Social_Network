@@ -2,7 +2,7 @@ import {authAPI} from "../api/api";
 import {Action, AnyAction, Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
-import {setErrorModeAC, SetErrorModeAC_T} from "./common-data-reducer";
+import {setErrorModeAC, SetErrorModeAC_T, setInitModeAC} from "./common-data-reducer";
 
 export type ThunkType<TAction extends Action = AnyAction> = ThunkAction<Promise<void>, AppStateType, unknown, TAction>
 
@@ -50,6 +50,8 @@ export const getAuthUserDataTC = () => (dispatch: Dispatch) => {
             let {id, email, login} = response.data.data
             dispatch(setAuthUserDataAC(id, email, login, true))
         }
+    }).then(() => {
+        dispatch(setInitModeAC(true))
     })
 }
 
@@ -62,7 +64,6 @@ export const login_TC = (email: string, password: string, rememberMe: boolean): 
                 } else {
                     if (res.data.messages.length) {
                         dispatch(setErrorModeAC(res.data.messages[0]))
-                        // alert(res.data.messages[0])
                     } else {
                         dispatch(setErrorModeAC('Some error hes occurred'))
                     }
