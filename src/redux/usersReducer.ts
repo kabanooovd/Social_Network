@@ -126,9 +126,10 @@ export const setIsFetchingAC = (isFetching: boolean): toggleFetchingActionType =
 export const followingInProgressAC = (isFetching: boolean, userId: number): followingInProgressActionType => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId})
 
 // Создаем thunk
-export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkType<toggleFetchingActionType | UsersToSetActionType | setTotalUsersCountActionType> => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkType<toggleFetchingActionType | UsersToSetActionType | setTotalUsersCountActionType | setCurrentPageActionType> => {
     return async (dispatch, getState) => {
         dispatch(setIsFetchingAC(true))
+        dispatch(setCurrentPageAC(currentPage))
         usersAPI.getUsers(currentPage, pageSize)
             .then(data => {
                 dispatch(setIsFetchingAC(false))

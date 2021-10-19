@@ -9,6 +9,14 @@ import {Users} from "./Users";
 import {LoadingSpinner} from "../common/LoadingSpinner/LoadingSpinner";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalCount,
+    getUsersPage
+} from "../../redux/users-selectors";
 
 type MapStateToPropsType = {
     usersPage: UsersReducerLocalStateType
@@ -56,14 +64,26 @@ export class UsersContainer extends React.Component<UsersPropsType> {
     }
 }
 
+// const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+//     return {
+//         usersPage: getUsersPage(state),
+//         // pageSize: state.usersPage.pageSize,
+//         pageSize: getPageSize(state),
+//         totalCount: state.usersPage.totalCount,
+//         currentPage: state.usersPage.currentPage,
+//         isFetching: state.usersPage.isFetching,
+//         followingInProgress: state.usersPage.followingInProgress
+//     }
+// }
+
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        usersPage: state.usersPage,
-        pageSize: state.usersPage.pageSize,
-        totalCount: state.usersPage.totalCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        usersPage: getUsersPage(state),
+        pageSize: getPageSize(state),
+        totalCount: getTotalCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state),
     }
 }
 
