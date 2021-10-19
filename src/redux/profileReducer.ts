@@ -5,6 +5,7 @@ const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
+const RM_POST = 'RM-POST';
 
 export type ProfileType = {
     userId: number
@@ -57,8 +58,6 @@ let initialState: ProfileReducerLocalStateType = {
         }
     },
     status: ''
-
-
 }
 
 export type PostsType = {
@@ -67,7 +66,7 @@ export type PostsType = {
     likesCount: number
 }
 
-type ProfileReducerLocalStateType = {
+export type ProfileReducerLocalStateType = {
     posts: PostsType[]
     profile: ProfileType
     newPostText: string
@@ -77,6 +76,7 @@ type ProfileReducerLocalStateType = {
 type GeneralProfileActionType = AddPostActionType           |
                                 setUserProfileActionType    |
                                 setStatusACActionType       |
+                                RemoveChosenPost_T          |
                                 UpdateTestActionType
 
 export const profileReducer = (state: ProfileReducerLocalStateType = initialState, action: GeneralProfileActionType) => {
@@ -95,9 +95,17 @@ export const profileReducer = (state: ProfileReducerLocalStateType = initialStat
         case SET_STATUS: {
             return {...state, status: action.status}
         }
+        case RM_POST: {
+            return {...state, posts: state.posts.filter(el => el.id !== action.postID)}
+        }
         default:
             return state
     }
+}
+
+export type RemoveChosenPost_T = ReturnType<typeof removeChosenPost>
+export const removeChosenPost = (postID: number) => {
+    return {type: RM_POST, postID} as const
 }
 
 export type setStatusACActionType = ReturnType<typeof setStatusAC>

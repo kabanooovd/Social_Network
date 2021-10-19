@@ -3,7 +3,7 @@ import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {ProfilePageType} from "./MyPostsContainer";
 
-const MyPosts = (props: ProfilePageType) => {
+const MyPosts =  React.memo((props: ProfilePageType) => {
 
     const postsElements = props.posts.map(arrElement => <Post message={arrElement.message}
                                                               likesCount={arrElement.likesCount}
@@ -23,7 +23,7 @@ const MyPosts = (props: ProfilePageType) => {
                 <span>
                     <h3>My posts</h3>
                 </span>
-                <textarea onChange={updateTextHandler} value={props.newPostText} />
+                <textarea onChange={updateTextHandler} value={props.newPostText}/>
                 <div>
                     <button onClick={onAddPost}>Post</button>
                 </div>
@@ -31,7 +31,8 @@ const MyPosts = (props: ProfilePageType) => {
             <div className={s.posts}>{postsElements}</div>
         </div>
     )
-}
+})
+
 export default MyPosts;
 
 
