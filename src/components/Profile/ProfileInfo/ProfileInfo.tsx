@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './ProfileInfo.module.css'
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
+import {ProfileStatusByHooks} from "./ProfileStatus/ProfileStatusByHooks";
 
 type ProfileType = {
     userId: number
@@ -41,7 +42,8 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                 <img src={props.profile.photos.small} className={s.userAva} />
                 {/*ava + description*/}
                 {props.profile.fullName}
-                <ProfileStatus status={props.status} updateStatusTC={props.updateStatusTC}/>
+                {/*<ProfileStatus status={props.status} updateStatusTC={props.updateStatusTC}/>*/}
+                <ProfileStatusByHooks status={props.status} updateStatusTC={props.updateStatusTC} />
             </div>
         </div>
     )
