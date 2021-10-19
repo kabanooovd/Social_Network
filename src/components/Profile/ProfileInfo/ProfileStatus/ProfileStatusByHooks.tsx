@@ -1,17 +1,15 @@
-import React, {useState} from "react";
-import {useDispatch} from "react-redux";
+import React, {useEffect, useState} from "react";
 
 type ProfileStatusT = {
     status: string
     updateStatusTC: (status: string) => void
 }
 
-type stateT = {
-    editMode: boolean
-    status: string
-}
-
 export const ProfileStatusByHooks = (props: ProfileStatusT) => {
+
+    useEffect(() => {
+        setStatus(props.status)
+    }, [props.status])
 
     const [editMode, setEditMode] = useState<boolean>(false)
     const [status, setStatus] = useState<string>(props.status)
