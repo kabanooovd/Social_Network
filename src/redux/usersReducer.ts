@@ -82,9 +82,6 @@ export type UsersReducerLocalStateType = {
     followingInProgress: []
 }
 
-
-
-
 export const usersReducer = (state: UsersReducerLocalStateType = initialState, action: GeneralUsersActionTypes): UsersReducerLocalStateType => {
 
     switch (action.type) {
@@ -130,42 +127,33 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number): Thu
     return async (dispatch, getState) => {
         dispatch(setIsFetchingAC(true))
         dispatch(setCurrentPageAC(currentPage))
-        usersAPI.getUsers(currentPage, pageSize)
-            .then(data => {
-                dispatch(setIsFetchingAC(false))
-                dispatch(setUsersAC(data.items))
-                //dispatch(setCurrentPageAC(data))
-                dispatch(setTotalUsersCountAC(data.totalCount))
-            });
+        let response = await usersAPI.getUsers(currentPage, pageSize)
+        dispatch(setIsFetchingAC(false))
+        dispatch(setUsersAC(response.items))
+        dispatch(setTotalUsersCountAC(response.totalCount))
     }
+}
+
+const  followUnfollowFlow = async (dispatch: Dispatch, userID: number, apiMethod: (userID: number) => Promise<any>, actionCreator: (userID: number) =>  GeneralUsersActionTypes ) => {
+    dispatch(followingInProgressAC(true, userID))
+    let response = await apiMethod(userID)
+    if (response.data.resultCode === 0) {
+        dispatch(actionCreator(userID))
+    }
+    dispatch(followingInProgressAC(false, userID))
 }
 
 export const followTC = (userID: number) => {
     return async (dispatch: Dispatch) => {
-        dispatch(followingInProgressAC(true, userID))
-        usersAPI.follow(userID)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(unFollowACSuccess(userID))
-                }
-                dispatch(followingInProgressAC(false, userID))
-            });
+        await followUnfollowFlow(dispatch, userID, usersAPI.follow.bind(usersAPI), unFollowACSuccess)
     }
 }
 
 export const unfollowTC = (userID: number) => {
     return async (dispatch: Dispatch) => {
-        dispatch(followingInProgressAC(true, userID))
-        usersAPI.unfollow(userID)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(followACSuccess(userID))
-                }
-                dispatch(followingInProgressAC(false, userID))
-            });
+        await followUnfollowFlow(dispatch, userID, usersAPI.unfollow.bind(usersAPI), followACSuccess)
     }
 }
-
 
 
 

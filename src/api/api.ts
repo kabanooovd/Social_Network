@@ -56,7 +56,6 @@ export const profileAPI =     {
 
 type CommonRequest_T<T> = {
     resultCode: number
-
     messages: string[]
     data: T
 }

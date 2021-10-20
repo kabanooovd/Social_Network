@@ -1,11 +1,11 @@
 import {profileAPI, usersAPI} from "../api/api";
 import {Dispatch} from "redux";
 
-const ADD_POST = "ADD-POST";
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_STATUS = 'SET_STATUS';
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
-const RM_POST = 'RM-POST';
+const ADD_POST = "profile/ADD-POST";
+const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
+const SET_STATUS = 'profile/SET_STATUS';
+const UPDATE_NEW_POST_TEXT = 'profile/UPDATE_NEW_POST_TEXT';
+const RM_POST = 'profile/RM-POST';
 
 export type ProfileType = {
     userId: number
@@ -125,24 +125,21 @@ export const setUserProfile = (profile: ProfileType) => {
     return {type: SET_USER_PROFILE, profile} as const
 }
 
-export const getStatusTC = (userId: string) => (dispatch: Dispatch) => {
-    profileAPI.getStatus(userId).then(response => {
+export const getStatusTC = (userId: string) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.getStatus(userId)
         dispatch(setStatusAC(response.data))
-    })
 }
 
-export const updateStatusTC = (status: string) => (dispatch: Dispatch) => {
-    profileAPI.updateStatus(status).then(response => {
+export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.updateStatus(status)
         if (response.data.resultCode === 0) {
             dispatch(setStatusAC(status))
         }
-    })
 }
 
-export const getUserProfileTC = (userId: string) => (dispatch: Dispatch) => {
-    usersAPI.getProfile(userId).then(response => {
-        dispatch(setUserProfile(response.data))
-    });
+export const getUserProfileTC = (userId: string) => async (dispatch: Dispatch) => {
+    let response = await usersAPI.getProfile(userId)
+    dispatch(setUserProfile(response.data))
 }
 
 

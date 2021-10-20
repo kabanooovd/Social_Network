@@ -44,41 +44,65 @@ export const setAuthUserDataAC = (id: string, email: string, login: string, isAu
     return {type: "SET_USER_DATA", payload: {id, email, login, isAuth}}
 }
 
-export const getAuthUserDataTC = () => (dispatch: Dispatch) => {
-    authAPI.me().then(response => {
-        if (response.data.resultCode === 0) {
-            let {id, email, login} = response.data.data
-            dispatch(setAuthUserDataAC(id, email, login, true))
-        }
-    }).then(() => {
-        dispatch(setInitModeAC(true))
-    })
-}
+// export const getAuthUserDataTC = () => (dispatch: Dispatch) => {
+//     authAPI.me().then(response => {
+//         if (response.data.resultCode === 0) {
+//             let {id, email, login} = response.data.data
+//             dispatch(setAuthUserDataAC(id, email, login, true))
+//         }
+//     }).then(() => {
+//         dispatch(setInitModeAC(true))
+//     })
+// }
 
-export const login_TC = (email: string, password: string, rememberMe: boolean): ThunkType<GeneralUsersActionTypes | SetErrorModeAC_T> => {
-    return async (dispatch) => {
-        authAPI.login({email, password, rememberMe})
-            .then(res => {
-                if (res.data.resultCode === 0) {
-                    dispatch(getAuthUserDataTC())
-                } else {
-                    if (res.data.messages.length) {
-                        dispatch(setErrorModeAC(res.data.messages[0]))
-                    } else {
-                        dispatch(setErrorModeAC('Some error hes occurred'))
-                    }
-                }
-            })
+export const getAuthUserDataTC = () => async (dispatch: Dispatch) => {
+    let response = await authAPI.me()
+    if (response.data.resultCode === 0) {
+        let {id, email, login} = response.data.data
+        dispatch(setAuthUserDataAC(id, email, login, true))
+        dispatch(setInitModeAC(true))
+    } else {
+        dispatch(setInitModeAC(true))
     }
 }
 
-export const logout_TC = () => (dispatch: Dispatch) => {
-    authAPI.logout()
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch((setAuthUserDataAC('', '', '', false)))
+// export const login_TC = (email: string, password: string, rememberMe: boolean): ThunkType<GeneralUsersActionTypes | SetErrorModeAC_T> => {
+//     return async (dispatch) => {
+//         authAPI.login({email, password, rememberMe})
+//             .then(res => {
+//                 if (res.data.resultCode === 0) {
+//                     dispatch(getAuthUserDataTC())
+//                 } else {
+//                     if (res.data.messages.length) {
+//                         dispatch(setErrorModeAC(res.data.messages[0]))
+//                     } else {
+//                         dispatch(setErrorModeAC('Some error hes occurred'))
+//                     }
+//                 }
+//             })
+//     }
+// }
+
+export const login_TC = (email: string, password: string, rememberMe: boolean): ThunkType<GeneralUsersActionTypes | SetErrorModeAC_T> => {
+    return async (dispatch) => {
+        let response = await authAPI.login({email, password, rememberMe})
+        if (response.data.resultCode === 0) {
+            dispatch(getAuthUserDataTC())
+        } else {
+            if (response.data.messages.length) {
+                dispatch(setErrorModeAC(response.data.messages[0]))
+            } else {
+                dispatch(setErrorModeAC('Some error hes occurred'))
             }
-        })
+        }
+    }
+}
+
+export const logout_TC = () => async (dispatch: Dispatch) => {
+    let response = await authAPI.logout()
+    if (response.data.resultCode === 0) {
+        dispatch((setAuthUserDataAC('', '', '', false)))
+    }
 }
 
 
