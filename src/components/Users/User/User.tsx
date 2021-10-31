@@ -33,7 +33,7 @@ export const User = (props: User_T) => {
                             }
                         </div>
                     </span>
-                     <span>
+            <span>
                         <span>
                             <div>{props.user.name}</div>
                             <div>{props.user.status ? props.user.status : 'no status'}</div>

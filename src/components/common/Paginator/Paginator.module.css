@@ -1,3 +1,25 @@
+.paginator {
+    display: flex;
+    flex-direction: row;
+}
+
+.notSelected {
+    cursor: pointer;
+    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .selectedPage {
+    border: 1px solid red;
+    cursor: pointer;
     font-weight: bold;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
