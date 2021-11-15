@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import News from "./components/News/News";
-import {BrowserRouter, Route, withRouter} from 'react-router-dom';
+import {HashRouter, Route, withRouter} from 'react-router-dom';
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import UsersContainer from './components/Users/UsersContainer';
@@ -64,11 +64,11 @@ const AppContainerData =  compose(
     connect(mapStateToProps, {getAuthUserDataTC}))(App) as React.ComponentClass<{}>;
 
 export const ContainerApp = () => {
-    return <BrowserRouter>
+    return <HashRouter>
         <Provider store={store}>
             <AppContainerData />
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 
