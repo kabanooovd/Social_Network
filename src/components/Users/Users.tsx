@@ -25,12 +25,6 @@ type PresentUsersPropsType = {
 
 export const Users = (props: PresentUsersPropsType) => {
 
-    let pagesCount = Math.ceil(props.totalCount / props.pageSize)
-    let pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
-    }
-
     return (
         <div>
             <Paginator totalCount={props.totalCount}
@@ -50,13 +44,3 @@ export const Users = (props: PresentUsersPropsType) => {
         </div>
     )
 }
-
-
-
-
-
-
-
-
-
-

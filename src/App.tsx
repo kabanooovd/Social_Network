@@ -5,7 +5,6 @@ import News from "./components/News/News";
 import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -14,6 +13,8 @@ import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import store, {AppStateType} from "./redux/redux-store";
 import {getAuthUserDataTC} from "./redux/auth-reducer";
+import {withSuspense} from "./hoc/withSuspense";
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
 type CombinedTypes = MapStateToProps_T & MapDispatchToProps_T
 
@@ -32,7 +33,7 @@ class App extends React.Component<CombinedTypes> {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/profile/:userId' render={() => <ProfileContainer/>}/>
-                    <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                    <Route path='/dialogs' render={withSuspense(DialogsContainer)} />
                     <Route path='/users' render={() => <UsersContainer/>}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
