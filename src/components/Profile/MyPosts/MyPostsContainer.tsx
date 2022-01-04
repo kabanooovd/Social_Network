@@ -21,7 +21,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText
-    }
+    }   
 }
 
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
