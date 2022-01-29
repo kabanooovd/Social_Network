@@ -7,6 +7,7 @@ import {
 	ProfileType,
 	updateStatusTC,
 	savePhotoTC,
+	saveProfileTC,
 } from "../../redux/profileReducer";
 import { AppStateType } from "../../redux/redux-store";
 import { withRouter, RouteComponentProps, Redirect } from "react-router-dom";
@@ -23,7 +24,7 @@ export type ProfileContainerPropsType = RouteComponentProps<PathParamsType> &
 type MapStatePropsType = {
 	profile: ProfileType;
 	status: string;
-	loggedUserID: string;
+	loggedUserID: number;
 	isAuth: boolean;
 };
 type MapDispatchPropsType = {
@@ -31,6 +32,7 @@ type MapDispatchPropsType = {
 	getStatusTC: (status: string) => void;
 	updateStatusTC: (status: string) => void;
 	savePhotoTC: (file: File) => void;
+	saveProfileTC: (data: ProfileType) => void;
 };
 export type ownPropsType = MapStatePropsType & MapDispatchPropsType;
 
@@ -38,7 +40,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 	refreshProfile() {
 		let userId = this.props.match.params.userId;
 		if (!userId) {
-			userId = this.props.loggedUserID;
+			userId = String(this.props.loggedUserID);
 		}
 		this.props.getUserProfileTC(userId);
 		this.props.getStatusTC(userId);
@@ -54,17 +56,17 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 		}
 	}
 	render() {
-		// if (!this.props.isAuth) return <Redirect to={"/#/login"} />;
-		console.log("dfdfdf");
-
 		return (
 			<Profile
 				{...this.props}
 				profile={this.props.profile}
 				status={this.props.status}
 				updateStatusTC={this.props.updateStatusTC}
-				isOwner={!this.props.match.params.userId}
+				isOwner={
+					this.props.match.params.userId === String(this.props.loggedUserID)
+				}
 				savePhotoTC={this.props.savePhotoTC}
+				saveProfileTC={this.props.saveProfileTC}
 			/>
 		);
 	}
@@ -73,7 +75,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 	profile: state.profilePage.profile,
 	status: state.profilePage.status,
-	loggedUserID: state.auth.id,
+	loggedUserID: +state.auth.id,
 	isAuth: state.auth.isAuth,
 });
 
@@ -84,6 +86,7 @@ export default compose<React.ComponentType>(
 		getStatusTC,
 		updateStatusTC,
 		savePhotoTC,
+		saveProfileTC,
 	}),
 	withRouter
 )(ProfileContainer);

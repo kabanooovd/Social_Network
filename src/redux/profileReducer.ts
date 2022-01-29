@@ -1,5 +1,7 @@
 import { profileAPI, usersAPI } from "../api/api";
-import { Dispatch } from "redux";
+import { Action, AnyAction, Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { AppStateType } from "./redux-store";
 
 const ADD_POST = "profile/ADD-POST";
 const SET_USER_PROFILE = "profile/SET_USER_PROFILE";
@@ -8,6 +10,13 @@ const UPDATE_NEW_POST_TEXT = "profile/UPDATE_NEW_POST_TEXT";
 const RM_POST = "profile/RM-POST";
 const SAVE_PHOTO_SUCCESS = "profile/SAVE_PHOTO_SUCCESS";
 
+export type ThunkType<TAction extends Action = AnyAction> = ThunkAction<
+	Promise<void>,
+	AppStateType,
+	unknown,
+	TAction
+>;
+
 export type ProfileType = {
 	userId: number;
 	lookingForAJob: boolean;
@@ -15,12 +24,13 @@ export type ProfileType = {
 	fullName: string;
 	contacts: ContactsForProfileType;
 	photos: PhotosForProfileType;
+	aboutMe: null | string;
 };
 type PhotosForProfileType = {
 	small: string;
 	large: string;
 };
-type ContactsForProfileType = {
+export type ContactsForProfileType = {
 	github: string;
 	vk: string;
 	facebook: string;
@@ -43,6 +53,7 @@ let initialState: ProfileReducerLocalStateType = {
 		lookingForAJob: false,
 		lookingForAJobDescription: "",
 		fullName: "",
+		aboutMe: null,
 		contacts: {
 			github: "",
 			vk: "",
@@ -171,6 +182,18 @@ export const savePhotoTC = (file: File) => async (dispatch: Dispatch) => {
 		dispatch(savePhotoSuccess(res.data.data.photos));
 	}
 };
+
+export const saveProfileTC =
+	(data: ProfileType): ThunkType =>
+	async (dispatch, getState) => {
+		const currentUserId = getState().auth.id;
+		try {
+			await profileAPI.updateProfile(data);
+			dispatch(getUserProfileTC(currentUserId));
+		} catch (err) {
+			alert(err);
+		}
+	};
 
 export type PhotosType = {
 	small: string | null;

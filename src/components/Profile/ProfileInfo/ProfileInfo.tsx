@@ -3,29 +3,10 @@ import s from "./ProfileInfo.module.css";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
 import { ProfileStatusByHooks } from "./ProfileStatus/ProfileStatusByHooks";
 import userPhoto from "../../../assets/user.png";
-
-type ProfileType = {
-	userId: number;
-	lookingForAJob: boolean;
-	lookingForAJobDescription: string;
-	fullName: string;
-	contacts: ContactsForProfileType;
-	photos: PhotosForProfileType;
-};
-type PhotosForProfileType = {
-	small: string;
-	large: string;
-};
-type ContactsForProfileType = {
-	github: string;
-	vk: string;
-	facebook: string;
-	instagram: string;
-	twitter: string;
-	website: string;
-	youtube: string;
-	mainLink: string;
-};
+import { ProfileType } from "../../../redux/profileReducer";
+import { Contacts } from "./Contacts";
+import { ProfileBlock } from "./ProfileBlock";
+import { EditProfileBlock } from "./EditProfile/EditProfileBlock";
 
 type ProfileInfoPropsType = {
 	profile: ProfileType;
@@ -33,9 +14,12 @@ type ProfileInfoPropsType = {
 	status: string;
 	isOwner: boolean;
 	savePhotoTC: (file: File) => void;
+	saveProfileTC: (data: ProfileType) => void;
 };
 
 const ProfileInfo = (props: ProfileInfoPropsType) => {
+	const [editProfile, setEditProfile] = React.useState(false);
+
 	const onMainPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files && e.target.files.length) {
 			props.savePhotoTC(e.target.files[0]);
@@ -45,7 +29,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
 	return (
 		<div>
 			<div className={s.profileImg}>
-				{/*<img src='http://s3.fotokto.ru/photo/full/319/3199886.jpg' alt=""/>*/}
+				<img src="http://s3.fotokto.ru/photo/full/319/3199886.jpg" alt="" />
 			</div>
 			<div className={s.profilePerson}>
 				<img
@@ -53,9 +37,20 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
 					className={s.userAva}
 				/>
 				<input type={"file"} onChange={onMainPhotoSelected} />
-				{/*ava + description*/}
 				{props.profile.fullName}
-				{/*<ProfileStatus status={props.status} updateStatusTC={props.updateStatusTC}/>*/}
+				{!editProfile ? (
+					<ProfileBlock
+						profile={props.profile}
+						isOwner={props.isOwner}
+						setEditProfile={setEditProfile}
+					/>
+				) : (
+					<EditProfileBlock
+						profile={props.profile}
+						setEditProfile={setEditProfile}
+						saveProfileTC={props.saveProfileTC}
+					/>
+				)}
 				<ProfileStatusByHooks
 					status={props.status}
 					updateStatusTC={props.updateStatusTC}

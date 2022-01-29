@@ -3,6 +3,7 @@ import s from "./Profile.module.css";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import { ProfileContainerPropsType } from "./ProfileContainer";
+import { ProfileType } from "../../redux/profileReducer";
 
 type ProfilePropsType = ProfileContainerPropsType;
 
@@ -10,6 +11,7 @@ const Profile = (
 	props: ProfilePropsType & {
 		isOwner: boolean;
 		savePhotoTC: (file: File) => void;
+		saveProfileTC: (data: ProfileType) => void;
 	}
 ) => {
 	return (
@@ -20,6 +22,7 @@ const Profile = (
 				profile={props.profile}
 				status={props.status}
 				updateStatusTC={props.updateStatusTC}
+				saveProfileTC={props.saveProfileTC}
 			/>
 			<div className={s.mainInfo}>
 				<MyPostsContainer />
