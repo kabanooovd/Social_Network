@@ -9,7 +9,7 @@ import {
 	savePhotoTC,
 } from "../../redux/profileReducer";
 import { AppStateType } from "../../redux/redux-store";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import { withRouter, RouteComponentProps, Redirect } from "react-router-dom";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import { compose } from "redux";
 
@@ -53,8 +53,10 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 			this.refreshProfile();
 		}
 	}
-
 	render() {
+		// if (!this.props.isAuth) return <Redirect to={"/#/login"} />;
+		console.log("dfdfdf");
+
 		return (
 			<Profile
 				{...this.props}

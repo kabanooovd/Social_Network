@@ -8,21 +8,3 @@ export const withSuspense = (Component: any) => {
     };
 
 };
-
-
-
-
-
-
-
-
-
-// import React from "react";
-//
-//
-// export const withSuspense = (Component: any) => {
-//
-//     return (props: any) => {
-//
-//     }
-// }
