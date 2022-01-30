@@ -64,6 +64,12 @@ export const profileAPI = {
 	},
 };
 
+export const securityApi = {
+	getCaptchaUrl() {
+		return instance.get(`security/get-captcha-url`);
+	},
+};
+
 type CommonRequest_T<T> = {
 	resultCode: number;
 	messages: string[];
@@ -74,5 +80,5 @@ type loginRequestData_T = {
 	email: string;
 	password: string;
 	rememberMe: boolean;
-	captcha?: boolean;
+	captcha?: string;
 };
